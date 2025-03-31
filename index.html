@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:transparent;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-image:url(https://i.pinimg.com/originals/26/da/91/26da91b41b6efe9b25491c2ee0617ed7.jpg) ;
+            background-repeat:repeat;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .navbar {
+            background: blue;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            background:transparent;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(231, 8, 8, 0.829);
+            display: none;
+            background-image:url(https://thumbs.dreamstime.com/z/back-view-inside-bus-seats-monitor-behind-passenger-seat-luggage-compartment-public-transportation-280375698.jpg);
+        }
+        h2 { color: hsl(0, 87%, 50%); }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: darkblue;
+        }
+        .seat-container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .seat {
+            width: 40px;
+            height: 40px;
+            background:transparent;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-image:url(https://img.cas.sk/cas/900px/4077253.jpg/z-bratislavy-do-vietnamu.jpg) ;
+        }
+        .seat.selected {
+            background: green;
+            color: white;
+        }
+        .logo {
+            width: 20px;;
+            margin-top: 20px;
+            background-color:transparent ;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="#" data-section="homeSection">Home</a>
+            <a href="#" data-section="signupSection">Sign Up</a>
+            <a href="#" data-section="loginSection">Login</a>
+            <a href="#" data-section="bookingSection">Book Ticket</a>
+            <a href="#" data-section="servicesSection">Services</a>
+            <a href="#" data-section="aboutSection">About Us</a>
+            <a href="#" data-section="contactSection">Contact Us</a>
+        </div>
+    </div>
+    <!-- Home Page -->
+    <div id="homeSection" class="container">
+        <img src="https://i.postimg.cc/G26fc4hF/Whats-App-Image-2025-03-31-at-01-26-26-05eb3c6b.jpg" alt="BNMX logo" class="logo">
+        <h2>Welcome to DNMX  Bus Services</h2>
+        <p>Your reliable travel partner for comfortable and affordable journeys.</p>
+    </div>
+    <!-- Sign Up Section -->
+    <div id="signupSection" class="container">
+        <h2>Sign Up</h2>
+        <input type="text" id="signupName" placeholder="Full Name">
+        <input type="email" id="signupEmail" placeholder="Email">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <button onclick="signUp()">Sign Up</button>
+    </div>
+    <!-- Login Section -->
+    <div id="loginSection" class="container">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+    <!-- Booking Section -->
+    <div id="bookingSection" class="container">
+        <h2>Book Your Ticket</h2>
+        <label>Full Name:</label>
+        <input type="text" id="fullName">
+        <label>Phone Number:</label>
+        <input type="tel" id="phoneNumber">
+        <label>Date of Travel:</label>
+        <input type="date" id="travelDate">
+        <label>Time of Travel:</label>
+        <input type="time" id="travelTime">
+        <label>From:</label>
+        <select id="fromLocation" onchange="calculateFare()">
+            <option value="Nairobi">Nairobi</option>
+            <option value="Mombasa">Mombasa</option>
+            <option value="Kisumu">Kisumu</option>
+            <option value="Eldoret">Eldoret</option>
+        </select>
+        <label>To:</label>
+        <select id="toLocation" onchange="calculateFare()">
+            <option value="Mombasa">Mombasa</option>
+            <option value="Nairobi">Nairobi</option>
+            <option value="Kisumu">Kisumu</option>
+            <option value="Eldoret">Eldoret</option>
+        </select>
+        <h3>Select Your Seat(s):</h3>
+        <div class="seat-container" id="seatContainer"></div>
+        <h3>Total Fare: Ksh <span id="totalFare">0</span></h3>
+        <button onclick="processPayment()">Proceed to Payment</button>
+    </div>
+    <!-- Services Section -->
+    <div id="servicesSection" class="container">
+        <h2>Our Services</h2>
+        <ul style="text-align: left;">
+            <li>Comfortable Bus Travel</li>
+            <li>Online Ticket Booking</li>
+            <li>Parcel Delivery</li>
+            <li>Luxury & Economy Bus Options</li>
+            <li>free entartainment</li>
+        </ul>
+    </div>
+    <!-- About Us Section -->
+    <div id="aboutSection" class="container">
+        <h2>About Us</h2>
+        <p>BNMX Bus Services has been a leading transport provider for over 10 years. We pride ourselves on safe, reliable, and affordable travel.</p>
+    </div>
+    <!-- Contact Us Section -->
+    <div id="contactSection" class="container">
+        <h2>Contact Us</h2>
+        <p>Email: support@BNMXbus.com</p>
+        <p>Phone: +254115043650</p>
+        <p>Address: Nairobi, Kenya</p>
+    </div>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll(".container").forEach(section => section.style.display = "none");
+            document.getElementById(sectionId).style.display = "block";
+        }
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                let sectionId = this.getAttribute('data-section');
+                showSection(sectionId);
+            });
+        });
+        function calculateFare() {
+            let from = document.getElementById("fromLocation").value;
+            let to = document.getElementById("toLocation").value;
+            let baseFare = 0;
+            if (from === "Nairobi" && to === "Mombasa") {
+                baseFare = 1200;
+            } else if (from === "Nairobi" && to === "Kisumu") {
+                baseFare = 1000;
+            } else if (from === "Mombasa" && to === "Nairobi") {
+                baseFare = 1200;
+            } else if (from === "Mombasa" && to === "Kisumu") {
+                baseFare = 2500;
+            } else if (from === "Kisumu" && to === "Nairobi") {
+                baseFare = 1600;
+            } else if (from === "Kisumu" && to === "Mombasa") {
+                baseFare = 2500;
+            } else if (from === "Eldoret" && to === "Nairobi") {
+                baseFare = 950;
+            } else if (from === "Eldoret" && to === "Mombasa") {
+                baseFare = 1900;
+            } else if (from === "Eldoret" && to === "Kisumu") {
+                baseFare = 800;
+            }
+            let selectedSeats = document.querySelectorAll(".seat.selected").length;
+            document.getElementById("totalFare").textContent = baseFare * selectedSeats;
+        }
+        function createSeats() {
+            let seatContainer = document.getElementById("seatContainer");
+            for (let i = 1; i <= 30; i++) {
+                let seat = document.createElement("div");
+                seat.classList.add("seat");
+                seat.textContent = i;
+                seat.addEventListener("click", function () {
+                    seat.classList.toggle("selected");
+                    calculateFare();
+                });
+                seatContainer.appendChild(seat);
+            }
+        }
+        function processPayment() { alert("Booking confirmed!"); }
+        createSeats();
+        showSection('homeSection');
+    </script>
+</body>
+</html>
