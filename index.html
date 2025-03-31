@@ -161,7 +161,8 @@
             <li>Online Ticket Booking</li>
             <li>Parcel Delivery</li>
             <li>Luxury & Economy Bus Options</li>
-            <li>free entartainment</li>
+            <li>free computers</li>
+            
         </ul>
     </div>
     <!-- About Us Section -->
@@ -206,8 +207,14 @@
                 baseFare = 2500;
             } else if (from === "Eldoret" && to === "Nairobi") {
                 baseFare = 950;
+            } else if (from === "Nairobi" && to === "Eldoret") {
+                baseFare = 950;
             } else if (from === "Eldoret" && to === "Mombasa") {
                 baseFare = 1900;
+            } else if (from === "Eldoret" && to === "Mombasa") {
+                baseFare = 1900;
+            } else if (from === "Eldoret" && to === "Kisumu") {
+                baseFare = 800;
             } else if (from === "Eldoret" && to === "Kisumu") {
                 baseFare = 800;
             }
@@ -216,7 +223,7 @@
         }
         function createSeats() {
             let seatContainer = document.getElementById("seatContainer");
-            for (let i = 1; i <= 30; i++) {
+            for (let i = 1; i <= 60; i++) {
                 let seat = document.createElement("div");
                 seat.classList.add("seat");
                 seat.textContent = i;
